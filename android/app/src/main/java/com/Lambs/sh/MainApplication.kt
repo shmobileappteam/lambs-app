@@ -1,4 +1,4 @@
-package com.dangerzone.app
+package com.Lambs.sh
 
 import android.app.Application
 import com.facebook.react.PackageList

@@ -49,7 +49,7 @@ const SplashScreen = ({ navigation }) => {
 
   useEffect(() => {
     // AsyncStorage.clear();
-    checkUser();
+    // checkUser();
   }, []);
 
   const checkUser = async () => {
@@ -90,15 +90,8 @@ const SplashScreen = ({ navigation }) => {
 
   return (
     <Container conStyle={styles.container} isPaddingVertical={false} isTextureVisible textureSoruce={SplashBg}>
-      <SlideInView slide="up" slideDuration={700}>
+      <SlideInView slide="right" slideDuration={700}>
         <AppIconSvg />
-      </SlideInView>
-      <View style={styles.margin} />
-      <SlideInView slide="down" slideDuration={700}>
-        <Typography textAlign='center' color={COLORS.white100} fFamily='poppinsSemiBold600'>The Ultimate Entertainment Hub.
-          Throw sharp objects at targets,
-          enjoy beverages, and explore the thrill.
-        </Typography>
       </SlideInView>
     </Container>
   );
