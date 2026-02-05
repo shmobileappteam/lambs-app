@@ -16,7 +16,7 @@ function Button({
   onPress = () => { },
   icon = false,
   rightIcon = false,
-  type = 'primary',
+  type = 'defualt',
   mb = 0,
   mt = 0,
   iconGap = 8,
@@ -39,7 +39,7 @@ function Button({
     defaultBgColor = disabled ? COLORS.grey100 : COLORS.primary;
     defaultTextColor = COLORS.white100;
   } else {
-    defaultBgColor = COLORS.primary;
+    defaultBgColor = COLORS.primary100;
     defaultTextColor = COLORS.white100;
   }
 

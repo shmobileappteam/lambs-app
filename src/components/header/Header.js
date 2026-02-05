@@ -162,11 +162,11 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     width: '100%',
     overflow: 'hidden',
-    // backgroundColor:'red'
+    // backgroundColor: 'red'
   },
   HomeHeaderStyle: {
     width: '100%',
-    backgroundColor: COLORS.primary,
+    backgroundColor: COLORS.secondary,
     // paddingTop: Sizer.vSize(32),
     borderBottomLeftRadius: Sizer.fS(24),
     borderBottomRightRadius: Sizer.fS(24),

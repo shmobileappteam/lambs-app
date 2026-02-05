@@ -16,7 +16,7 @@ const TextField = React.forwardRef(
       placeholder = 'Placeholder',
       label = '',
       placeholderColor = COLORS.grey400,
-      handleChange = e => {},
+      handleChange = e => { },
       rightIcon = false,
       leftIcon = false,
       leftIconName = 'mail',
@@ -99,7 +99,7 @@ const TextField = React.forwardRef(
             containerSt,
             {
               borderWidth: isFocus ? Sizer.fS(1.3) : borderInactiveWidth,
-              borderColor: isFocus ? COLORS.secondary : borderInactiveColor,
+              borderColor: isFocus ? COLORS.primary : borderInactiveColor,
             },
             error ? styles.errorContainer : null,
           ]}
@@ -121,7 +121,7 @@ const TextField = React.forwardRef(
           {leftIcon && (
             <View style={[styles.leftIconCont, leftIconContainer]}>
               <Icon
-                color={isFocus ? COLORS.secondary : leftIconInActiveColor}
+                color={isFocus ? COLORS.primary : leftIconInActiveColor}
                 iconFamily={leftIconFamily}
                 size={Sizer.vSize(19)}
                 name={leftIconName}
@@ -132,7 +132,7 @@ const TextField = React.forwardRef(
           <TextInput
             editable={disable}
             placeholder={isFocus || !label ? placeholder : ''}
-            placeholderTextColor={isFocus ? COLORS.black200 : placeholderColor}
+            placeholderTextColor={isFocus ? COLORS.primary : placeholderColor}
             ref={inputRef}
             value={value}
             maxLength={maxLength}
@@ -142,14 +142,14 @@ const TextField = React.forwardRef(
             style={[
               styles.textInput,
               {
-                color: isFocus ? COLORS.black100 : COLORS.grey300,
+                color: isFocus ? COLORS.primary : COLORS.grey300,
                 paddingLeft: leftIcon ? Sizer.hSize(8) : Sizer.hSize(12),
                 paddingRight:
                   rightIcon || password ? Sizer.hSize(8) : Sizer.hSize(12),
               },
               inputStyle,
             ]}
-            cursorColor={COLORS.secondary}
+            cursorColor={COLORS.primary}
             onFocus={() => setIsFocus(true)}
             onBlur={() => setIsFocus(false)}
             {...props}

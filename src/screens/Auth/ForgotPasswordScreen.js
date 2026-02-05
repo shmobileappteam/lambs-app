@@ -74,7 +74,6 @@ const ForgotPasswordScreen = ({ navigation }) => {
               <Button
                 label={'Get Verification Code'}
                 mt={30}
-                type="secondary"
                 onPress={handleSubmit}
                 loader={isPending}
               />

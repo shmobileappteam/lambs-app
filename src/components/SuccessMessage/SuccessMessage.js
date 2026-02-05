@@ -40,7 +40,6 @@ const SuccessMessage = ({
       </Typography>
       <Button
         label={buttonLabel}
-        type="secondary"
         btnStyle={{ width: '100%' }}
         onPress={onPress || (() => navigation.goBack())}
       />

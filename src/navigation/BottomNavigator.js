@@ -91,7 +91,7 @@ const MyTabBar = ({ state, descriptors, navigation }) => {
 
 const styles = StyleSheet.create({
   conStyle: {
-    backgroundColor: COLORS.primary,
+    backgroundColor: COLORS.secondary,
     // paddingBottom: Platform.select({
     //   android: Sizer.vSize(30),
     //   ios: Sizer.vSize(30),

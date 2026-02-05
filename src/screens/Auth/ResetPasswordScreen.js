@@ -130,7 +130,6 @@ const ResetPasswordScreen = ({ navigation, route }) => {
                   />
                   <Button
                     label={'Verify'}
-                    type="secondary"
                     mt={35}
                     onPress={async () => {
                       try {
@@ -187,7 +186,6 @@ const ResetPasswordScreen = ({ navigation, route }) => {
                   />
                   <Button
                     label={'Change Password'}
-                    type="secondary"
                     mt={35}
                     loader={isPending}
                     onPress={handleSubmit}

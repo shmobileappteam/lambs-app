@@ -91,7 +91,6 @@ const HomeScreen = ({ navigation }) => {
       conStyle={styles.container}
       isPadding={false}
       isPaddingVertical={false}
-      isTextureVisible
     >
       <Header type="home" />
 
@@ -205,7 +204,7 @@ const ServiceImageCard = React.memo(({ item }) => (
 
 const styles = StyleSheet.create({
   container: {
-    // backgroundColor: COLORS.primary,
+    backgroundColor: COLORS.primary,
   },
 
   backgroundImage: {

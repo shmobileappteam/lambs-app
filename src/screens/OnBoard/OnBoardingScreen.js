@@ -44,9 +44,9 @@ const OnBoardingScreen = ({ navigation }) => {
     2: onboard03,
   };
   const text = {
-    0: "Let's make awesome changes to your Home ",
-    1: 'We provide professional service at a friendly price',
-    2: 'The best results & your satisfaction is our top priority',
+    0: "Welcome to Lamb’s Business Solution",
+    1: 'Built on Experience & Integrity',
+    2: 'Services Designed for You',
   };
   const dots = [0, 1, 2];
 
@@ -146,7 +146,7 @@ const OnBoardingScreen = ({ navigation }) => {
       return;
     }
     AsyncStorage.setItem(KEYS.IS_ONBOARD, 'false');
-    navigation.navigate('GetStartedScreen');
+    navigation.navigate('LoginScreen');
   };
 
   // Animated styles
@@ -280,15 +280,8 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     ...GLOBALSTYLE.paddingHor,
     overflow: 'hidden',
-    shadowColor: '#000',
-    shadowOffset: {
-      width: 0,
-      height: 2,
-    },
-    shadowOpacity: 0.23,
-    shadowRadius: 2.62,
-    elevation: 4,
-    paddingBottom: Sizer.vSize(50),
+
+    paddingBottom: Sizer.vSize(100),
   },
   dot: {
     height: Sizer.vSize(8),

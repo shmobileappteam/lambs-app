@@ -49,7 +49,7 @@ const SplashScreen = ({ navigation }) => {
 
   useEffect(() => {
     // AsyncStorage.clear();
-    // checkUser();
+    checkUser();
   }, []);
 
   const checkUser = async () => {
@@ -58,10 +58,10 @@ const SplashScreen = ({ navigation }) => {
       const fisrtTime = await AsyncStorage.getItem(KEYS.IS_ONBOARD);
 
       // NO NEED FOR ONBOARD
-      // if (fisrtTime === null) {
-      //   navigation.replace('OnBoardingScreen');
-      //   return;
-      // }
+      if (fisrtTime === null) {
+        navigation.replace('OnBoardingScreen');
+        return;
+      }
       const device_token = await AsyncStorage.getItem(KEYS.FCM_TOKEN);
       const provider = await AsyncStorage.getItem(KEYS.LOGIN_TYPE);
       const socialToken = await AsyncStorage.getItem(KEYS.SOCIAL_TOKEN);

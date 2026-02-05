@@ -8,14 +8,10 @@ const IMAGEONLOADCOLOR = {
 };
 
 const COLORS = {
-  // mainBg: '#FFFFFF',
-  // primary: '#720813',
-  // primary100: '#4B060C',
-  // secondary: '#191919',
   mainBg: '#FFFFFF',
-  primary: '#F75817',
-  primary100: '#4B060C',
-  secondary: '#191919',
+  primary: '#152E77',
+  primary100: '#D8A44A',
+  secondary: '#001D3F',
 
   //Blue Variants:
   blue100: '#010D7C',

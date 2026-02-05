@@ -39,7 +39,7 @@ export default function DrawerNavigator() {
         drawerType: 'slide',
         headerShown: false,
         drawerStyle: {
-          backgroundColor: COLORS.primary,
+          backgroundColor: COLORS.secondary,
           width: '75%',
         },
         overlayColor: `rgba(0,0,0, .3)`,
@@ -195,7 +195,7 @@ function CustomDrawerContent({ navigation, ...props }) {
 
   return (
     <>
-      <View style={{ flex: 1, backgroundColor: COLORS.black100 }}>
+      <View style={{ flex: 1, backgroundColor: COLORS.secondary }}>
         <DrawerContentScrollView style={GLOBALSTYLE.paddingHor} {...props}>
           {drawerStatus === 'open' && (
             <StatusBar

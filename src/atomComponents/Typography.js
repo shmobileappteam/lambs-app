@@ -5,7 +5,7 @@ import { COLORS, FONTS } from '../globalStyle/Theme';
 import Sizer from '../helpers/Sizer';
 
 const Typography = ({
-  color = COLORS.white100,
+  color = COLORS.black100,
   size = 14,
   pT = 0,
   pB = 0,
