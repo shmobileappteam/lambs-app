@@ -126,7 +126,7 @@ const CheckoutScreen = ({ navigation, route }) => {
         <View
           style={{
             ...styles.contentWrapper,
-            backgroundColor: COLORS.black300,
+            backgroundColor: COLORS.white300,
           }}
         >
           <TimeAndDes item={serviceDetail} />
@@ -217,14 +217,14 @@ const TimeAndDes = ({ item }) => {
       <Flex jusContent={'space-between'} mB={20} gap={16}>
         <View style={styles.descWrapper}>
           <Typography >Date</Typography>
-          <Typography color={COLORS.grey300} fFamily="poppinsSemiBold600" mT={8}>
+          <Typography color={COLORS.primary} fFamily="poppinsSemiBold600" mT={8}>
             {item?.booking_date || 'N/A'}
           </Typography>
         </View>
 
         <View style={styles.descWrapper}>
           <Typography >Slot</Typography>
-          <Typography color={COLORS.grey300} fFamily="poppinsSemiBold600" mT={8}>
+          <Typography color={COLORS.primary} fFamily="poppinsSemiBold600" mT={8}>
             {item?.slot || 'N/A'}
           </Typography>
         </View>
@@ -234,7 +234,7 @@ const TimeAndDes = ({ item }) => {
         <View style={styles.descWrapper}>
           <Typography >Service</Typography>
           <Typography
-            color={COLORS.grey300}
+            color={COLORS.primary}
             fFamily="poppinsSemiBold600"
             textTransform={'capitalize'}
             mT={8}
@@ -318,19 +318,19 @@ const AmountComp = ({ originalPrice, discount, totalPrice }) => {
   return (
     <View style={[GLOBALSTYLE.paddingHor, styles.sectionSpace]}>
       <Flex jusContent={'space-between'} algItems={'center'} mB={20}>
-        <Typography color={COLORS.white100}>Sub Total</Typography>
+        <Typography color={COLORS.black200}>Sub Total</Typography>
         <Typography color={COLORS.primary} fFamily="poppinsSemiBold600">
           {originalPrice || 'N/A'}
         </Typography>
       </Flex>
       <Flex jusContent={'space-between'} algItems={'center'} mB={20}>
-        <Typography color={COLORS.white100}>Discount</Typography>
+        <Typography color={COLORS.black200}>Discount</Typography>
         <Typography color={COLORS.primary} fFamily="poppinsSemiBold600">
           {discount ? `${discount}%` : '$0'}
         </Typography>
       </Flex>
       <Flex jusContent={'space-between'} algItems={'center'}>
-        <Typography color={COLORS.white100}>Total</Typography>
+        <Typography color={COLORS.black200}>Total</Typography>
         <Typography color={COLORS.primary} fFamily="poppinsSemiBold600">
           {' '}
           {totalPrice || 'N/A'}

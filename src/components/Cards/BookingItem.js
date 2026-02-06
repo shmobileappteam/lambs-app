@@ -21,7 +21,7 @@ const BookingItem = ({ item, onPressCard }) => {
       activeOpacity={BASEOPACITY}
       onPress={onPressCard}
       style={{
-        backgroundColor: COLORS.secondary,
+        backgroundColor: COLORS.white300,
         borderRadius: Sizer.hSize(12),
         paddingHorizontal: Sizer.vSize(20),
         paddingVertical: Sizer.hSize(20),

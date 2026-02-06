@@ -35,6 +35,10 @@
 	</dict>
 	<key>NSLocationWhenInUseUsageDescription</key>
 	<string/>
+	<key>NSCameraUsageDescription</key>
+	<string>$(PRODUCT_NAME) wants your camera permission for better user experince</string>
+	<key>NSPhotoLibraryUsageDescription</key>
+	<string>$(PRODUCT_NAME) wants your photos permission for better user experince</string>
 	<key>RCTNewArchEnabled</key>
 	<true/>
 	<key>UIAppFonts</key>

@@ -53,7 +53,7 @@ const ReviewItem = ({ review }) => {
         </View>
       </Flex>
 
-      <Typography size={14} color={COLORS.white100} LineHeight={20}>
+      <Typography size={14} color={COLORS.black300} LineHeight={20}>
         {review?.description}
       </Typography>
     </View>

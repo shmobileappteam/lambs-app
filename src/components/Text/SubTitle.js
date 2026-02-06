@@ -16,7 +16,7 @@ export const SubTitle = ({
       <Flex algItems={'center'}>
         <Typography
           size={22}
-          color={COLORS.grey200}
+          color={COLORS.black200}
           fFamily={'poppinsSemiBold600'}>
           {mTitle}{' '}
         </Typography>

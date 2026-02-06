@@ -10,7 +10,7 @@ import { verified } from '../../../assets/images';
 const BookingSuccessScreen = () => {
   const navigation = useNavigation();
   return (
-    <Container conStyle={{ backgroundColor: COLORS.black200 }}>
+    <Container >
       <View style={styles.contentContainer}>
         <Image
           source={verified}
@@ -38,7 +38,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     paddingHorizontal: Sizer.vSize(5),
-    backgroundColor: COLORS.black200
+    // backgroundColor: COLORS.black200
   },
   successImage: {
     width: Sizer.vSize(145),
@@ -51,14 +51,14 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     marginBottom: Sizer.hSize(3),
     marginTop: Sizer.hSize(35),
-    color: COLORS.white100
+    color: COLORS.primary
   },
   descriptionText: {
     fontSize: Sizer.fS(14),
     textAlign: 'center',
     fontFamily: FONTS.poppinsMedium500,
     marginBottom: Sizer.hSize(23),
-    color: '#505050',
+    color: COLORS.primary,
   },
   button: {
     paddingVertical: Sizer.hSize(2),

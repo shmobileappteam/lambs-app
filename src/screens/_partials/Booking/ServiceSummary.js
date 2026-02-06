@@ -25,7 +25,7 @@ const ServiceSummary = ({
         extraStyle={{ width: '100%' }}>
         <Typography
           size={14}
-          color={COLORS.grey500}
+          color={COLORS.black200}
           fFamily="poppinsRegular400">
           Total Services
         </Typography>
@@ -45,14 +45,14 @@ const ServiceSummary = ({
             extraStyle={{ width: '100%' }}>
             <Typography
               size={14}
-              color={COLORS.grey500}
+              color={COLORS.black200}
               fFamily="poppinsRegular400"
               extraStyle={{ width: '100%' }}>
               Date & Time
             </Typography>
             <Typography
               size={14}
-              color={COLORS.grey300}
+              color={COLORS.black200}
               fFamily="poppinsSemiBold600">
               {dataTime}
             </Typography>
@@ -69,13 +69,13 @@ const ServiceSummary = ({
             extraStyle={{ width: '100%' }}>
             <Typography
               size={14}
-              color={COLORS.grey500}
+              color={COLORS.black200}
               fFamily="poppinsRegular400">
               Sub Total
             </Typography>
             <Typography
               size={14}
-              color={COLORS.grey300}
+              color={COLORS.black200}
               fFamily="poppinsSemiBold600">
               ${actualPrice}
             </Typography>
@@ -93,7 +93,7 @@ const ServiceSummary = ({
             extraStyle={{ width: '100%' }}>
             <Typography
               size={14}
-              color={COLORS.grey500}
+              color={COLORS.black200}
               fFamily="poppinsRegular400">
               Discount {discount}%
             </Typography>
@@ -113,10 +113,10 @@ const ServiceSummary = ({
         jusContent="space-between"
         algItems="center"
         extraStyle={{ width: '100%' }}>
-        <Typography size={18} color={COLORS.grey300} fFamily="poppinsBold700">
+        <Typography size={18} color={COLORS.black200} fFamily="poppinsBold700">
           Grand Total
         </Typography>
-        <Typography size={18} color={COLORS.grey300} fFamily="poppinsBold700">
+        <Typography size={18} color={COLORS.green} fFamily="poppinsBold700">
           ${salePrice}
         </Typography>
       </Flex>

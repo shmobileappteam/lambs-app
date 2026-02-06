@@ -38,7 +38,7 @@ const AllServiceScreen = ({ navigation, onServicePress }) => {
         <Flex
           direction="column"
           extraStyle={{
-            backgroundColor: COLORS.black300,
+            backgroundColor: COLORS.white300,
             borderRadius: 12,
           }}>
           <Flex extraStyle={{ position: 'relative' }}>

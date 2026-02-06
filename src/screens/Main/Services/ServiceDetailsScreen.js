@@ -115,7 +115,7 @@ const ServiceDetailsScreen = ({ navigation, route }) => {
 
           <SubTitle mTitle="About Service" />
 
-          <Typography size={14} mT={5} color={COLORS.grey100}>
+          <Typography size={14} mT={5} >
             {serviceDetail?.description}
           </Typography>
 
