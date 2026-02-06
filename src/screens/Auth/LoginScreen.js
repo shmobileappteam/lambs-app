@@ -1,5 +1,5 @@
 import React from 'react';
-import { Image, StyleSheet, View } from 'react-native';
+import { Image, ScrollView, StyleSheet, View } from 'react-native';
 import { Checkbox } from 'react-native-paper';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { useDispatch } from 'react-redux';
@@ -44,119 +44,123 @@ const LoginScreen = ({ navigation }) => {
 
   return (
     <Container isTextureVisible isKeyboardAvoid>
-      <Flex direction={'column'} algItems={'center'}>
-        <MainLogoSvg width={182} height={85} />
-      </Flex>
-      <Flex mT={25} algItems={'center'}>
-        <Typography size={32} fFamily="interTightSemiBold600" mR={10}>
-          Welcome Back!
+      <ScrollView
+        showsVerticalScrollIndicator={false}
+        contentContainerStyle={{ paddingBottom: Sizer.vSize(150) }}>
+        <Flex direction={'column'} algItems={'center'}>
+          <MainLogoSvg width={182} height={85} />
+        </Flex>
+        <Flex mT={25} algItems={'center'}>
+          <Typography size={32} fFamily="interTightSemiBold600" mR={10}>
+            Welcome Back!
+          </Typography>
+          <Image
+            source={wave}
+            style={{ height: Sizer.vSize(31), width: Sizer.vSize(32) }}
+            resizeMode="contain"
+          />
+        </Flex>
+        <Typography size={14} mT={6} LineHeight={22} style={{ maxWidth: 340 }}>
+          Log in to manage your book1ings, track service progress, and stay
+          updated with ease.
         </Typography>
-        <Image
-          source={wave}
-          style={{ height: Sizer.vSize(31), width: Sizer.vSize(32) }}
-          resizeMode="contain"
-        />
-      </Flex>
-      <Typography size={14} mT={6} LineHeight={22} style={{ maxWidth: 340 }}>
-        Log in to manage your book1ings, track service progress, and stay
-        updated with ease.
-      </Typography>
 
-      <FormController
-        initialValues={{
-          email: __DEV__ ? 'mark@mailinator.com' : '',
-          password: __DEV__ ? 'Admin@1234' : '',
-        }}
-        validationSchema={validatoinSchema.AuthValidations.SignInSchema}
-        onSubmit={handleLogin}
-      >
-        {props => {
-          const { handleSubmit, handleChange, values, errors, handleBlur } =
-            props;
+        <FormController
+          initialValues={{
+            email: __DEV__ ? 'mark@mailinator.com' : '',
+            password: __DEV__ ? 'Admin@1234' : '',
+          }}
+          validationSchema={validatoinSchema.AuthValidations.SignInSchema}
+          onSubmit={handleLogin}
+        >
+          {props => {
+            const { handleSubmit, handleChange, values, errors, handleBlur } =
+              props;
 
-          return (
-            <>
-              <InputLabel title="Name" />
-              <TextField
-                placeholder="Email"
-                leftIcon
-                handleChange={handleChange('email')}
-                value={values?.email}
-                error={errors?.email}
-                onBlur={handleBlur('email')}
-              />
-              <InputLabel title="Password" />
-              <TextField
-                placeholder="Password"
-                leftIcon
-                handleChange={handleChange('password')}
-                value={values?.password}
-                error={errors?.password}
-                onBlur={handleBlur('password')}
-                leftIconName="key"
-                rightIcon
-                password
-              />
+            return (
+              <>
+                <InputLabel title="Name" />
+                <TextField
+                  placeholder="Email"
+                  leftIcon
+                  handleChange={handleChange('email')}
+                  value={values?.email}
+                  error={errors?.email}
+                  onBlur={handleBlur('email')}
+                />
+                <InputLabel title="Password" />
+                <TextField
+                  placeholder="Password"
+                  leftIcon
+                  handleChange={handleChange('password')}
+                  value={values?.password}
+                  error={errors?.password}
+                  onBlur={handleBlur('password')}
+                  leftIconName="key"
+                  rightIcon
+                  password
+                />
 
-              <Flex jusContent={'space-between'} mT={15}>
-                <Flex algItems={'center'}>
-                  <View
-                    style={[
-                      GLOBALSTYLE.checkBoxWrapper,
-                      { marginRight: Sizer.hSize(4) },
-                    ]}
+                <Flex jusContent={'space-between'} mT={15}>
+                  <Flex algItems={'center'}>
+                    <View
+                      style={[
+                        GLOBALSTYLE.checkBoxWrapper,
+                        { marginRight: Sizer.hSize(4) },
+                      ]}
+                    >
+                      <Checkbox.Android
+                        color={COLORS.primary}
+                        uncheckedColor={COLORS.primary}
+                        status="checked"
+                      />
+                    </View>
+                    <Typography size={14} fFamily="poppinsMedium500">
+                      Remember me
+                    </Typography>
+                  </Flex>
+                  <Typography
+                    fFamily={'poppinsMedium500'}
+                    size={14}
+                    mT={2}
+                    color={COLORS.primary}
+                    onPress={() => navigation.navigate('ForgotPasswordScreen')}
                   >
-                    <Checkbox.Android
-                      color={COLORS.primary}
-                      uncheckedColor={COLORS.primary}
-                      status="checked"
-                    />
-                  </View>
-                  <Typography size={14} fFamily="poppinsMedium500">
-                    Remember me
+                    Forgot password?
                   </Typography>
                 </Flex>
-                <Typography
-                  fFamily={'poppinsMedium500'}
-                  size={14}
-                  mT={2}
-                  color={COLORS.primary}
-                  onPress={() => navigation.navigate('ForgotPasswordScreen')}
-                >
-                  Forgot password?
-                </Typography>
-              </Flex>
-              <Button
-                label="Login"
-                mt={30}
-                onPress={handleSubmit}
-                loader={isPending}
-              />
-            </>
-          );
-        }}
-      </FormController>
-      <Flex jusContent={'center'} mT={26} extraStyle={{ width: '100%' }}>
-        <Typography
-          fontSize={14}
-          fFamily="poppinsMedium500"
-        >
-          Don’t have an account?{' '}
+                <Button
+                  label="Login"
+                  mt={30}
+                  onPress={handleSubmit}
+                  loader={isPending}
+                />
+              </>
+            );
+          }}
+        </FormController>
+        <Flex jusContent={'center'} mT={26} extraStyle={{ width: '100%' }}>
           <Typography
-            fontSize={15}
-            mL={6}
-            color={COLORS.primary}
-            fFamily="poppinsSemiBold600"
-            onPress={() => {
-              navigation.navigate('SignupScreen');
-            }}
+            fontSize={14}
+            fFamily="poppinsMedium500"
           >
-            Register Now
+            Don’t have an account?{' '}
+            <Typography
+              fontSize={15}
+              mL={6}
+              color={COLORS.primary}
+              fFamily="poppinsSemiBold600"
+              onPress={() => {
+                navigation.navigate('SignupScreen');
+              }}
+            >
+              Register Now
+            </Typography>
           </Typography>
-        </Typography>
-      </Flex>
+        </Flex>
+      </ScrollView>
     </Container>
-  );
+  ); 3
 };
 
 export default LoginScreen;

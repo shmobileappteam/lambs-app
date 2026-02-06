@@ -128,7 +128,6 @@ const SignupScreen = ({ navigation }) => {
                   label={'Sign Up'}
                   mt={26}
                   onPress={handleSubmit}
-                  type="secondary"
                   loader={isPending}
                 />
               </>
