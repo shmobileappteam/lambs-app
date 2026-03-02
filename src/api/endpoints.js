@@ -1,7 +1,7 @@
 // ---( Live URL )--- //
 export const API_DOMAIN = __DEV__
-  ? 'https://pro-fixer.demoappprojects.com/Danger_Zone/api'
-  : 'https://pro-fixer.demoappprojects.com/Danger_Zone/api';
+  ? 'https://pro-fixer.demoappprojects.com/lambs-solutions/api'
+  : 'https://pro-fixer.demoappprojects.com/lambs-solutions/api';
 
 export const ENDPOINTS = {
   //Auth End Points:

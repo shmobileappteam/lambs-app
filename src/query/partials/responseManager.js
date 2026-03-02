@@ -1,11 +1,11 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import {KEYS} from '../../constants';
-import {showMessage} from '../../utils';
-import {setUser} from '../../redux/slices/appSlice';
-import {CommonActions} from '@react-navigation/native';
-import {queryClient} from '../../api/api';
-import {getServiceCategories, getServices} from '../../api/bookingService';
-import {getPhotosCategories} from '../../api/generalService';
+import { KEYS } from '../../constants';
+import { showMessage } from '../../utils';
+import { setUser } from '../../redux/slices/appSlice';
+import { CommonActions } from '@react-navigation/native';
+import { queryClient } from '../../api/api';
+import { getServiceCategories, getServices } from '../../api/bookingService';
+import { getPhotosCategories } from '../../api/generalService';
 
 async function Prefetching() {
   await queryClient.prefetchQuery({
@@ -26,14 +26,14 @@ export const onLoginSuccess = async (
   response,
   navigation,
   dispatch,
-  {email, password},
+  { email, password },
 ) => {
   if (response?.status) {
     dispatch(setUser(response?.data));
     await AsyncStorage.setItem(KEYS.ACCESS_TOKEN, response?.token);
     await AsyncStorage.setItem(
       KEYS.CREDENTIALS,
-      JSON.stringify({email, password}),
+      JSON.stringify({ email, password }),
     );
 
     //Prefetching Data:
@@ -43,14 +43,15 @@ export const onLoginSuccess = async (
       navigation.dispatch(
         CommonActions.reset({
           index: 0,
-          routes: [{name: 'DrawerTabs'}],
+          routes: [{ name: 'DrawerTabs' }],
         }),
       );
     } else {
       navigation.dispatch(
         CommonActions.reset({
-          index: 0,
+          index: 1,
           routes: [
+            { name: 'LoginScreen' },
             {
               name: 'VerifyEmailScreen',
               params: {
@@ -70,7 +71,7 @@ export const onSocialSuccessLogin = async (
   navigation,
   dispatch,
 ) => {
-  const {provider, token} = reqData;
+  const { provider, token } = reqData;
 
   try {
     if (response?.status) {
@@ -87,7 +88,7 @@ export const onSocialSuccessLogin = async (
       navigation.dispatch(
         CommonActions.reset({
           index: 0,
-          routes: [{name: 'DrawerTabs'}],
+          routes: [{ name: 'DrawerTabs' }],
         }),
       );
     } else {
