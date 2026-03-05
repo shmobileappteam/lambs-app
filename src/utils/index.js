@@ -1,7 +1,7 @@
-import {Platform, StatusBar} from 'react-native';
-import {showMessage as flashMessage} from 'react-native-flash-message';
+import { Platform, StatusBar } from 'react-native';
+import { showMessage as flashMessage } from 'react-native-flash-message';
 
-export function showMessage({message = '', type = 'default', bgColor = ''}) {
+export function showMessage({ message = '', type = 'default', bgColor = '' }) {
   const backgroundColor =
     bgColor ||
     (type === 'success'
@@ -93,35 +93,44 @@ export const objectToFormData = (
 };
 
 export const maskPhoneNumber = input => {
-  if (!input) return;
-  // Remove all non-numeric characters from the input and take only 10 first digits
-  const digits = input.replace(/\D/g, '').slice(0, 10);
+  if (!input) return '';
 
-  // Return empty string if there are no digits
-  if (digits.length === 0) return '';
+  // Clean the input: remove everything except digits
+  let digits = input.toString().replace(/\D/g, '');
 
-  let formattedPhoneNumber = '';
-
-  // Apply different formats based on digit length
-  if (digits.length <= 3) {
-    // Format for 1-3 digits
-    formattedPhoneNumber = digits;
-  } else if (digits.length <= 6) {
-    // Format for 4-6 digits as AAA-BBB
-    formattedPhoneNumber = digits.replace(/(\d{3})(\d+)/, '$1-$2');
-  } else {
-    // Format for 7-10 digits as AAA-BBB-CCCC
-    formattedPhoneNumber = digits.replace(/(\d{3})(\d{3})(\d+)/, '$1-$2-$3');
+  // If it's an 11-digit number starting with 1 (standard US/Canada full number),
+  // we strip the '1' to isolate the 10-digit local part for formatting.
+  if (digits.length === 11 && digits.startsWith('1')) {
+    digits = digits.slice(1);
   }
 
-  return formattedPhoneNumber;
+  // Limit to 10 digits for the US local part
+  digits = digits.slice(0, 10);
+
+  if (digits.length === 0) return '';
+
+  let formatted = '+1 ';
+
+  if (digits.length > 0) {
+    formatted += '(' + digits.slice(0, 3);
+  }
+
+  if (digits.length > 3) {
+    formatted += ') ' + digits.slice(3, 6);
+  }
+
+  if (digits.length > 6) {
+    formatted += '-' + digits.slice(6, 10);
+  }
+
+  return formatted;
 };
 
 export function discountedPrice(price, discount) {
   const actualPrice = price?.split(' ')?.[1] || 0;
   const salePrice = actualPrice - (actualPrice * discount) / 100 || 0;
   const discountedAmount = actualPrice - salePrice;
-  return {salePrice, actualPrice, discount, discountedAmount};
+  return { salePrice, actualPrice, discount, discountedAmount };
 }
 
 export const isFeildEmpty = data => {
@@ -143,7 +152,7 @@ export function transformGalleryData(galleryData) {
   const flattened = [];
 
   galleryData.data.forEach(item => {
-    const {type} = item;
+    const { type } = item;
 
     if (type === 'image' && Array.isArray(item.multiple_images)) {
       item.multiple_images.forEach(url => {

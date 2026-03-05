@@ -1,42 +1,84 @@
 import {
-  BackHandler,
   Image,
   ScrollView,
   StyleSheet,
-  Text,
   TouchableOpacity,
   View,
 } from 'react-native';
-import React, { useEffect, useState } from 'react';
-import { Container, Flex, SafeAreaWrapper } from '../../../atomComponents';
+import React, { useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import { Avatar } from 'react-native-paper';
-import { avatar, edit as Edit } from '../../../assets/images';
+import { CommonActions } from '@react-navigation/native';
+import { Container, Flex, Typography } from '../../../atomComponents';
 import { BASEOPACITY, COLORS, GLOBALSTYLE } from '../../../globalStyle/Theme';
 import Sizer from '../../../helpers/Sizer';
-import { Button, Header, TextField } from '../../../components';
-import InputLabel from '../../../components/customFields/InputLabel';
-import { useSelector } from 'react-redux';
-import { maskPhoneNumber } from '../../../utils';
+import { Header } from '../../../components';
+import Icon from '../../../helpers/Icon';
+import { handleLogout } from '../../../redux/slices/appSlice';
+import { logout } from '../../../api/userService';
+import { useCustomQuery } from '../../../query/useCustomQuery';
+import { queryClient } from '../../../api/api';
 
 const ProfileScreen = ({ navigation }) => {
-  const [edit, setIsEdit] = useState(false);
+  const dispatch = useDispatch();
   const { user } = useSelector(state => state.app);
 
-  useEffect(() => {
-    const backHandler = BackHandler.addEventListener(
-      'hardwareBackPress',
-      () => {
-        if (edit) {
-          setIsEdit(false);
-          return true;
-        } else {
-          return false;
-        }
-      },
+  function clearApp() {
+    queryClient.clear();
+    navigation.dispatch(
+      CommonActions.reset({
+        index: 0,
+        routes: [{ name: 'LoginScreen' }],
+      }),
     );
+  }
 
-    return () => backHandler.remove();
-  }, [edit]);
+  //Custom Logout Query Hook
+  const { refetch: triggerLogout } = useCustomQuery({
+    queryKey: ['logout'],
+    queryFn: logout,
+    enabled: false,
+  });
+
+  // Request Logout:
+  const logoutHandler = () => {
+    clearApp();
+    triggerLogout().then(() => {
+      dispatch(handleLogout());
+    });
+  };
+
+  const ProfileMenuItem = ({ label, icon, iconFamily, onPress, color }) => (
+    <TouchableOpacity
+      activeOpacity={BASEOPACITY}
+      onPress={onPress}
+      style={styles.menuItem}
+    >
+      <Flex algItems="center" gap={12}>
+        <View style={styles.iconCircle}>
+          <Icon
+            name={icon}
+            iconFamily={iconFamily}
+            size={Sizer.fS(20)}
+            color={COLORS.primary}
+          />
+        </View>
+        <Typography
+          fFamily="poppinsMedium500"
+          size={16}
+          color={color || COLORS.black100}
+        >
+          {label}
+        </Typography>
+      </Flex>
+      <Icon
+        name="chevron-right"
+        iconFamily="Feather"
+        size={Sizer.fS(20)}
+        color={COLORS.grey400}
+      />
+    </TouchableOpacity>
+  );
 
   return (
     <Container isPadding={false} isPaddingVertical={false} isTextureVisible>
@@ -45,68 +87,48 @@ const ProfileScreen = ({ navigation }) => {
       <ScrollView
         showsVerticalScrollIndicator={false}
         style={GLOBALSTYLE.paddingHor}
-        contentContainerStyle={{ paddingBottom: Sizer.hSize(200) }}
+        contentContainerStyle={{ paddingBottom: Sizer.hSize(100) }}
       >
-        <Flex algItems={'center'} direction={'column'} mT={25} mb={30}>
-          <TouchableOpacity
-            activeOpacity={BASEOPACITY}
-            onPress={() => navigation.navigate('EditProfileScreen')}
-            style={{ position: 'relative' }}
+        <Flex algItems={'center'} direction={'column'} mT={40} mb={30}>
+          <Avatar.Image
+            source={{ uri: user?.image }}
+            size={Sizer.hSize(100)}
+            style={{ backgroundColor: 'grey' }}
+          />
+          <Typography
+            size={22}
+            mT={15}
+            fFamily="interTightSemiBold600"
+            color={COLORS.black100}
+            textTransform="capitalize"
           >
-            <Avatar.Image
-              source={{ uri: user?.image }}
-              size={Sizer.hSize(88)}
-              style={{ backgroundColor: 'grey' }}
-            />
-            <Image
-              source={Edit}
-              resizeMode="contain"
-              style={{
-                height: Sizer.vSize(24),
-                width: Sizer.vSize(24),
-                position: 'absolute',
-                bottom: 0,
-                right: 0,
-              }}
-            />
-          </TouchableOpacity>
+            {user?.name || 'User Name'}
+          </Typography>
+          <Typography
+            size={14}
+            mT={4}
+            fFamily="poppinsRegular400"
+            color={COLORS.grey300}
+          >
+            {user?.email || 'user@example.com'}
+          </Typography>
         </Flex>
 
-        <InputLabel title="Email" />
-        <TextField
-          placeholder="email"
-          value={user?.email}
-          leftIcon
-          leftIconName="mail"
-          disable={false}
-        />
-        <InputLabel title="Name" />
-        <TextField
-          placeholder="William"
-          value={user?.name}
-          leftIcon
-          leftIconName="user"
-          disable={edit}
-        />
-        <InputLabel title="Address" />
-        <TextField
-          placeholder="address"
-          value={user?.address}
-          leftIcon
-          leftIconName="info"
-          disable={edit}
-        />
-
-        <InputLabel title="Phone Number" />
-        <TextField
-          placeholder="+1234567890"
-          leftIcon
-          value={maskPhoneNumber(user?.phone)}
-          leftIconName="phone"
-          maxLength={12}
-          keyboardType="number-pad"
-          disable={edit}
-        />
+        <View style={styles.menuContainer}>
+          <ProfileMenuItem
+            label="Profile Details"
+            icon="user"
+            iconFamily="Feather"
+            onPress={() => navigation.navigate('EditProfileScreen')}
+          />
+          <ProfileMenuItem
+            label="Log out"
+            icon="logout"
+            iconFamily="MaterialIcons"
+            onPress={logoutHandler}
+            color={COLORS.red}
+          />
+        </View>
       </ScrollView>
     </Container>
   );
@@ -115,7 +137,26 @@ const ProfileScreen = ({ navigation }) => {
 export default ProfileScreen;
 
 const styles = StyleSheet.create({
-  formWrapper: {
-    paddingHorizontal: Sizer.hSize(20),
+  menuContainer: {
+    marginTop: Sizer.vSize(20),
+    gap: Sizer.vSize(15),
+  },
+  menuItem: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    backgroundColor: COLORS.white200,
+    padding: Sizer.fS(12),
+    borderRadius: Sizer.fS(12),
+    borderWidth: 1,
+    borderColor: 'rgba(0,0,0,0.05)',
+  },
+  iconCircle: {
+    width: Sizer.fS(40),
+    height: Sizer.fS(40),
+    borderRadius: Sizer.fS(20),
+    backgroundColor: `${COLORS.grey400}30`,
+    justifyContent: 'center',
+    alignItems: 'center',
   },
 });

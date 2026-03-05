@@ -39,10 +39,10 @@ export default function DrawerNavigator() {
         drawerType: 'slide',
         headerShown: false,
         drawerStyle: {
-          backgroundColor: COLORS.secondary,
+          backgroundColor: COLORS.blue200,
           width: '75%',
         },
-        overlayColor: `rgba(0,0,0, .3)`,
+        overlayColor: `rgba(0,8,85, .3)`,
         swipeEnabled: false,
       }}
       drawerContent={props => <CustomDrawerContent {...props} />}
@@ -145,7 +145,7 @@ function CustomDrawerContent({ navigation, ...props }) {
           >
             <View
               style={{
-                backgroundColor: COLORS.black200,
+                backgroundColor: COLORS.white100,
                 marginHorizontal: 20,
                 paddingVertical: 30,
                 paddingHorizontal: 20,
@@ -175,7 +175,9 @@ function CustomDrawerContent({ navigation, ...props }) {
                   btnStyle={{ flex: 1 }}
                   label="Delete"
                   type="primary"
+                  textColor={COLORS.red}
                   onPress={handleDeleteAcount}
+                  loadColor={COLORS.red}
                   loader={isLoading}
                 />
                 <Button
@@ -195,7 +197,11 @@ function CustomDrawerContent({ navigation, ...props }) {
 
   return (
     <>
-      <View style={{ flex: 1, backgroundColor: COLORS.secondary }}>
+      <ImageBackground
+        source={homeBgTexture}
+        style={{ flex: 1 }}
+        resizeMode="cover"
+      >
         <DrawerContentScrollView style={GLOBALSTYLE.paddingHor} {...props}>
           {drawerStatus === 'open' && (
             <StatusBar
@@ -206,7 +212,12 @@ function CustomDrawerContent({ navigation, ...props }) {
           )}
           <View style={styles.headerView}>
             <Image source={{ uri: user?.image }} style={styles.headerImg} />
-            <Typography fFamily="poppinsMedium500" size={18} color="white">
+            <Typography
+              fFamily="poppinsMedium500"
+              size={18}
+              color="white"
+              textTransform={'capitalize'}
+            >
               {user?.name}
             </Typography>
           </View>
@@ -216,7 +227,7 @@ function CustomDrawerContent({ navigation, ...props }) {
             {drawerListData.map((item, index) => renderDrawerItem(item, index))}
           </View>
         </DrawerContentScrollView>
-      </View>
+      </ImageBackground>
 
       {/* <LogoutModal
         visible={modalVisibility}

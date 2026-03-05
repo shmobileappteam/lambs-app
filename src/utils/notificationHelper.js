@@ -1,17 +1,17 @@
-import {Platform} from 'react-native';
-import {openSettings, requestNotifications} from 'react-native-permissions';
+import { Platform } from 'react-native';
+import { openSettings, requestNotifications } from 'react-native-permissions';
 import messaging from '@react-native-firebase/messaging';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 //-----------
-import {KEYS} from '../constants';
-import notifee from '@notifee/react-native';
-import {queryClient} from '../api/api';
+import { KEYS } from '../constants';
+import notifee, { AndroidStyle } from '@notifee/react-native';
+import { queryClient } from '../api/api';
 
 globalThis.RNFB_SILENCE_MODULAR_DEPRECATION_WARNINGS = true; // Avoid firebase deprecation warning
 
 export const requestNotificationPermission = async () => {
   if (Platform.OS === 'android') {
-    const {status} = await requestNotifications([
+    const { status } = await requestNotifications([
       'alert',
       'sound',
       'badge',
@@ -66,7 +66,9 @@ const receiveForegroundMessages = () => {
       remoteMessage,
     );
 
-    queryClient.invalidateQueries({queryKey: ['bookings']});
+    queryClient.invalidateQueries({ queryKey: ['bookings'] });
+    queryClient.invalidateQueries({ queryKey: ['notifications'] });
+
     handleForegroundNotification(remoteMessage);
   });
 };
@@ -92,21 +94,36 @@ const receiveBackgroundMessages = () => {
 };
 
 const handleForegroundNotification = async remoteMsg => {
-  console.log('🚀 ~ handleForegroundNotification ~ remoteMsg:', remoteMsg);
+  // console.log('🚀 ~ handleForegroundNotification ~ remoteMsg:', remoteMsg);
   try {
     const channelId = await notifee.createChannel({
       id: 'default',
       name: 'Default Channel',
     });
     await notifee.requestPermission();
+
+    const title = remoteMsg?.notification?.title;
+    const body = remoteMsg?.notification?.body;
+    const imageUrl =
+      remoteMsg?.notification?.android?.imageUrl || remoteMsg?.data?.imageUrl;
+    console.log('🚀 ~ handleForegroundNotification ~ imageUrl:', imageUrl);
+
     await notifee.displayNotification({
-      ...remoteMsg?.notification,
+      title,
+      body,
       android: {
-        ...remoteMsg?.notification?.android,
         channelId,
+        pressAction: { id: 'default' },
+        style: imageUrl
+          ? {
+              type: AndroidStyle.BIGPICTURE,
+              picture: imageUrl,
+            }
+          : undefined,
       },
     });
-    console.log('NOTI ');
+
+    console.log('NOTI DONE');
   } catch (err) {
     console.log(
       ' notificationHelper.js:66 ~ handleForegroundNotification ~ err:',

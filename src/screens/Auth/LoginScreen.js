@@ -9,7 +9,7 @@ import { MainLogoSvg } from '../../assets/svgs';
 import { wave } from '../../assets/images';
 import Sizer from '../../helpers/Sizer';
 import InputLabel from '../../components/customFields/InputLabel';
-import { Button, TextField } from '../../components';
+import { Button, Header, TextField } from '../../components';
 import { COLORS, GLOBALSTYLE } from '../../globalStyle/Theme';
 import FormController from '../../components/formController/FormController';
 import validatoinSchema from '../../validations';
@@ -44,12 +44,15 @@ const LoginScreen = ({ navigation }) => {
 
   return (
     <Container isTextureVisible isKeyboardAvoid>
+      <Header
+        isBackVisible={false}
+        centerType="goback"
+        CenterComponent={<MainLogoSvg width={182} height={85} />}
+      />
       <ScrollView
         showsVerticalScrollIndicator={false}
-        contentContainerStyle={{ paddingBottom: Sizer.vSize(150) }}>
-        <Flex direction={'column'} algItems={'center'}>
-          <MainLogoSvg width={182} height={85} />
-        </Flex>
+        contentContainerStyle={{ paddingBottom: Sizer.vSize(200) }}
+      >
         <Flex mT={25} algItems={'center'}>
           <Typography size={32} fFamily="interTightSemiBold600" mR={10}>
             Welcome Back!
@@ -61,10 +64,9 @@ const LoginScreen = ({ navigation }) => {
           />
         </Flex>
         <Typography size={14} mT={6} LineHeight={22} style={{ maxWidth: 340 }}>
-          Log in to manage your book1ings, track service progress, and stay
+          Log in to manage your bookings, track service progress, and stay
           updated with ease.
         </Typography>
-
         <FormController
           initialValues={{
             email: __DEV__ ? 'mark@mailinator.com' : '',
@@ -79,7 +81,7 @@ const LoginScreen = ({ navigation }) => {
 
             return (
               <>
-                <InputLabel title="Name" />
+                <InputLabel title="Email" />
                 <TextField
                   placeholder="Email"
                   leftIcon
@@ -101,23 +103,23 @@ const LoginScreen = ({ navigation }) => {
                   password
                 />
 
-                <Flex jusContent={'space-between'} mT={15}>
+                <Flex jusContent={'space-between'} mT={15} algItems={'center'}>
                   <Flex algItems={'center'}>
-                    <View
-                      style={[
-                        GLOBALSTYLE.checkBoxWrapper,
-                        { marginRight: Sizer.hSize(4) },
-                      ]}
-                    >
-                      <Checkbox.Android
-                        color={COLORS.primary}
-                        uncheckedColor={COLORS.primary}
-                        status="checked"
-                      />
-                    </View>
-                    <Typography size={14} fFamily="poppinsMedium500">
-                      Remember me
-                    </Typography>
+                    {/* <View
+                    style={[
+                      GLOBALSTYLE.checkBoxWrapper,
+                      { marginRight: Sizer.hSize(4) },
+                    ]}
+                  >
+                    <Checkbox.Android
+                      color={COLORS.primary}
+                      uncheckedColor={COLORS.primary}
+                      status="checked"
+                    />
+                  </View>
+                  <Typography size={14} fFamily="poppinsMedium500">
+                    Remember me
+                  </Typography> */}
                   </Flex>
                   <Typography
                     fFamily={'poppinsMedium500'}
@@ -131,6 +133,7 @@ const LoginScreen = ({ navigation }) => {
                 </Flex>
                 <Button
                   label="Login"
+                  type="secondary"
                   mt={30}
                   onPress={handleSubmit}
                   loader={isPending}
@@ -142,6 +145,7 @@ const LoginScreen = ({ navigation }) => {
         <Flex jusContent={'center'} mT={26} extraStyle={{ width: '100%' }}>
           <Typography
             fontSize={14}
+            color={COLORS.black100}
             fFamily="poppinsMedium500"
           >
             Don’t have an account?{' '}
@@ -160,7 +164,7 @@ const LoginScreen = ({ navigation }) => {
         </Flex>
       </ScrollView>
     </Container>
-  ); 3
+  );
 };
 
 export default LoginScreen;

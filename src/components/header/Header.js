@@ -27,6 +27,7 @@ const Header = ({
   isBackGreen,
   centerType = null,
   onPressRight = null,
+  CenterComponent = null,
   ...titleStyles
 }) => {
   const navigation = useNavigation();
@@ -66,7 +67,7 @@ const Header = ({
             onPress={onPresBack ?? (() => navigation.goBack())}
             style={{
               padding: Sizer.fS(8),
-              backgroundColor: COLORS.primary100,
+              backgroundColor: COLORS.secondary,
               borderRadius: 100,
               position: 'absolute',
               left: Sizer.hSize(24),
@@ -93,9 +94,12 @@ const Header = ({
       ) : (
         <View
           style={{
-            marginTop: Sizer.vSize(60),
+            marginTop: Sizer.vSize(24),
             width: '100%',
-            height: Sizer.hSize(36),
+            minHeight: Sizer.hSize(36),
+            flexDirection: 'row',
+            alignItems: 'center',
+            justifyContent: 'center',
           }}
         >
           {isBackVisible && (
@@ -104,11 +108,13 @@ const Header = ({
               onPress={onPresBack ?? (() => navigation.goBack())}
               style={[
                 styles.backButton,
-
                 {
                   backgroundColor: isBackGreen
                     ? COLORS.secondary
                     : COLORS.primary,
+                  // Center vertically within the row
+                  top: '50%',
+                  marginTop: -Sizer.vSize(18), // Half of back button height (approx 36)
                 },
               ]}
             >
@@ -122,14 +128,13 @@ const Header = ({
           )}
 
           <View style={styles.centeredContent}>
-            <Typography
-              size={24}
-              // mB={6}
-              fFamily="abrilRegular400"
-              {...titleStyles}
-            >
-              {title}
-            </Typography>
+            {CenterComponent ? (
+              CenterComponent
+            ) : (
+              <Typography size={24} fFamily="abrilRegular400" {...titleStyles}>
+                {title}
+              </Typography>
+            )}
           </View>
         </View>
       )}
@@ -162,11 +167,11 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     width: '100%',
     overflow: 'hidden',
-    // backgroundColor: 'red'
+    // backgroundColor:'red'
   },
   HomeHeaderStyle: {
     width: '100%',
-    backgroundColor: COLORS.secondary,
+    backgroundColor: COLORS.blue100,
     // paddingTop: Sizer.vSize(32),
     borderBottomLeftRadius: Sizer.fS(24),
     borderBottomRightRadius: Sizer.fS(24),

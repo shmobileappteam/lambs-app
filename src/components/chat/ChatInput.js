@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, { useState } from 'react';
 import {
   View,
   TextInput,
@@ -7,10 +7,10 @@ import {
   ActivityIndicator,
 } from 'react-native';
 
-import {COLORS, FONTS} from '../../globalStyle/Theme';
+import { COLORS, FONTS } from '../../globalStyle/Theme';
 import Sizer from '../../helpers/Sizer';
 import Icon from '../../helpers/Icon';
-import {Flex} from '../../atomComponents';
+import { Flex } from '../../atomComponents';
 
 const ChatInput = ({
   handleSend = () => {},
@@ -28,13 +28,14 @@ const ChatInput = ({
         marginHorizontal: Sizer.vSize(18),
         borderColor: isFocused ? COLORS.primary : COLORS.grey300,
         backgroundColor: COLORS.whiteV1,
-      }}>
-      <Icon
+      }}
+    >
+      {/* <Icon
         name="plus-square"
         iconFamily="Feather"
         color={isFocused ? COLORS.primary : COLORS.grey300}
         size={18}
-      />
+      /> */}
       <View style={styles.flex1}>
         <TextInput
           placeholder="Send your message"
@@ -43,7 +44,7 @@ const ChatInput = ({
           value={inputValue}
           onFocus={() => setIsFocused(true)}
           onBlur={() => setIsFocused(false)}
-          style={{...styles.textInput, color: COLORS.black100}}
+          style={{ ...styles.textInput, color: COLORS.black100 }}
         />
       </View>
 
@@ -51,7 +52,8 @@ const ChatInput = ({
         activeOpacity={1}
         style={styles.sendBtn}
         disabled={!inputValue || isLoading}
-        onPress={handleSend}>
+        onPress={handleSend}
+      >
         {isLoading ? (
           <ActivityIndicator size={20} color={COLORS.primary} />
         ) : (

@@ -6,7 +6,7 @@ import { Container, Flex, Typography } from '../../atomComponents';
 import { MainLogoSvg } from '../../assets/svgs';
 import Sizer from '../../helpers/Sizer';
 import InputLabel from '../../components/customFields/InputLabel';
-import { Button, TextField } from '../../components';
+import { Button, Header, TextField } from '../../components';
 import { COLORS } from '../../globalStyle/Theme';
 import FormController from '../../components/formController/FormController';
 import validatoinSchema from '../../validations';
@@ -38,19 +38,22 @@ const SignupScreen = ({ navigation }) => {
 
   return (
     <Container isTextureVisible isKeyboardAvoid>
-      <Flex direction={'column'} algItems={'center'}>
-        <MainLogoSvg width={182} height={85} />
-      </Flex>
+      <Header
+        isBackVisible
+        centerType="goback"
+        CenterComponent={<MainLogoSvg width={182} height={85} />}
+      />
       <ScrollView
         showsVerticalScrollIndicator={false}
-        contentContainerStyle={{ paddingBottom: Sizer.vSize(200) }}>
+        contentContainerStyle={{ paddingBottom: Sizer.vSize(200) }}
+      >
         <Typography size={32} mT={25} fFamily="interTightSemiBold600" mR={10}>
           Create An Account{' '}
         </Typography>
-        <Typography size={14} mT={6} LineHeight={22} style={{ maxWidth: 340 }}>
+        {/* <Typography size={14} mT={6} LineHeight={22} style={{ maxWidth: 340 }}>
           Sign up to book expert roofing services quickly and easily—your roof deserves the best.
 
-        </Typography>
+        </Typography> */}
 
         <FormController
           initialValues={{
@@ -58,10 +61,11 @@ const SignupScreen = ({ navigation }) => {
             email: __DEV__ ? 'mark1@mailinator.com' : '',
             password: __DEV__ ? 'Admin@1234' : '',
             password_confirmation: __DEV__ ? 'Admin@1234' : '',
-            phone: __DEV__ ? '1234567890' : '',
+            phone: '',
           }}
           validationSchema={validatoinSchema.AuthValidations.SignUpSchema}
-          onSubmit={handleRegister}>
+          onSubmit={handleRegister}
+        >
           {props => {
             const { handleSubmit, handleChange, values, errors, handleBlur } =
               props;
@@ -72,6 +76,8 @@ const SignupScreen = ({ navigation }) => {
                 <TextField
                   placeholder="Name"
                   leftIcon
+                  leftIconName="person-outline"
+                  leftIconFamily="Ionicons"
                   handleChange={handleChange('name')}
                   value={values.name}
                   error={errors.name}
@@ -81,6 +87,8 @@ const SignupScreen = ({ navigation }) => {
                 <TextField
                   placeholder="Email"
                   leftIcon
+                  leftIconName="mail-outline"
+                  leftIconFamily="Ionicons"
                   handleChange={handleChange('email')}
                   value={values.email}
                   error={errors.email}
@@ -112,20 +120,26 @@ const SignupScreen = ({ navigation }) => {
                 />
                 <InputLabel title="Phone Number" />
                 <TextField
-                  placeholder="+1234567890"
+                  placeholder="+1 (123) 456-7890"
                   leftIcon
                   leftIconName="phone"
-                  handleChange={number =>
-                    handleChange('phone')(number?.replace(/\D/g, ''))
-                  }
+                  handleChange={number => {
+                    let digits = number?.replace(/\D/g, '');
+                    if (digits?.startsWith('1')) {
+                      digits = digits.slice(1);
+                    }
+                    handleChange('phone')(digits);
+                  }}
                   value={maskPhoneNumber(values?.phone)}
                   error={errors.phone}
                   onBlur={handleBlur('phone')}
-                  maxLength={12}
+                  maxLength={17}
+                  keyboardType="phone-pad"
                 />
 
                 <Button
                   label={'Sign Up'}
+                  type="secondary"
                   mt={26}
                   onPress={handleSubmit}
                   loader={isPending}
@@ -137,7 +151,9 @@ const SignupScreen = ({ navigation }) => {
         <Flex jusContent={'center'} mT={26} extraStyle={{ width: '100%' }}>
           <Typography
             fontSize={14}
-            fFamily="poppinsMedium500">
+            color={COLORS.black100}
+            fFamily="poppinsMedium500"
+          >
             Already have an account?{' '}
             <Typography
               fontSize={15}
@@ -145,8 +161,9 @@ const SignupScreen = ({ navigation }) => {
               color={COLORS.primary}
               fFamily="poppinsSemiBold600"
               onPress={() => {
-                navigation.goBack()
-              }}>
+                navigation.goBack();
+              }}
+            >
               Login Now{' '}
             </Typography>
           </Typography>

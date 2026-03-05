@@ -1,5 +1,5 @@
 import React from 'react';
-import {createNativeStackNavigator} from '@react-navigation/native-stack';
+import { createNativeStackNavigator } from '@react-navigation/native-stack';
 //------
 import {
   AdminChatScreen,
@@ -11,7 +11,7 @@ import {
   EditProfileScreen,
   ForgotPasswordScreen,
   GalleryScreen,
-  GetStartedScreen,
+  // GetStartedScreen,
   LoginScreen,
   NotificationScreen,
   OnBoardingScreen,
@@ -29,7 +29,7 @@ import {
 } from '../screens';
 
 import DrawerNavigator from './DrawerNavigator';
-import {COLORS} from '../globalStyle/Theme';
+import { COLORS } from '../globalStyle/Theme';
 
 const StackNavigator = () => {
   const Stack = createNativeStackNavigator();
@@ -43,7 +43,8 @@ const StackNavigator = () => {
         animation: 'slide_from_right',
         navigationBarColor: COLORS.mainBg,
       }}
-      initialRouteName={__DEV__ ? 'SplashScreen' : 'SplashScreen'}>
+      initialRouteName={__DEV__ ? 'SplashScreen' : 'SplashScreen'}
+    >
       {/* Splash */}
       <Stack.Screen name="SplashScreen" component={SplashScreen} />
 
@@ -51,7 +52,7 @@ const StackNavigator = () => {
       <Stack.Screen name="OnBoardingScreen" component={OnBoardingScreen} />
 
       {/* Auth */}
-      <Stack.Screen name="GetStartedScreen" component={GetStartedScreen} />
+      {/* <Stack.Screen name="GetStartedScreen" component={GetStartedScreen} /> */}
       <Stack.Screen name="SignupScreen" component={SignupScreen} />
       <Stack.Screen name="LoginScreen" component={LoginScreen} />
       <Stack.Screen name="VerifyEmailScreen" component={VerifyEmailScreen} />

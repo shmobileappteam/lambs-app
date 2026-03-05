@@ -1,35 +1,35 @@
-import {StyleSheet, TouchableOpacity, View} from 'react-native';
-import React, {useState} from 'react';
+import { StyleSheet, TouchableOpacity, View } from 'react-native';
+import React, { useState } from 'react';
 
 //------
-import {Container, Typography} from '../../atomComponents';
-import {Button, Header, TextField} from '../../components';
-import {BASEOPACITY, COLORS} from '../../globalStyle/Theme';
+import { Container, Typography } from '../../atomComponents';
+import { Button, Header, TextField } from '../../components';
+import { BASEOPACITY, COLORS } from '../../globalStyle/Theme';
 import InputLabel from '../../components/customFields/InputLabel';
 import SlideInView from '../../animations/SlideView';
 import Sizer from '../../helpers/Sizer';
 import SuccessMessage from '../../components/SuccessMessage/SuccessMessage';
-import {useCustomMutation} from '../../query/useCustomMutation';
-import {resendOtp, verifyEmail} from '../../api/userService';
+import { useCustomMutation } from '../../query/useCustomMutation';
+import { resendOtp, verifyEmail } from '../../api/userService';
 import FormController from '../../components/formController/FormController';
 import validatoinSchema from '../../validations';
-import {useCustomQuery} from '../../query/useCustomQuery';
-import {showMessage} from '../../utils';
+import { useCustomQuery } from '../../query/useCustomQuery';
+import { showMessage } from '../../utils';
 
-const VerifyEmailScreen = ({navigation, route}) => {
+const VerifyEmailScreen = ({ navigation, route }) => {
   const comeFromLogin = route.params?.fromLogin;
 
   const [isEmailVerified, setIsEmailVerified] = useState(false);
 
   // Custom Query Hook:
-  const {refetch: fetchOtp, isFetching} = useCustomQuery({
+  const { refetch: fetchOtp, isFetching } = useCustomQuery({
     queryKey: ['otp'],
     queryFn: resendOtp,
     enabled: false,
   });
 
   // Custom Mutation Hook:
-  const {mutate: requestVerifyEmail, isPending} = useCustomMutation({
+  const { mutate: requestVerifyEmail, isPending } = useCustomMutation({
     mutationFn: verifyEmail,
     onSuccess: response => {
       if (response.status) {
@@ -41,7 +41,7 @@ const VerifyEmailScreen = ({navigation, route}) => {
   // Resend Otp Request:
   const handleResendOtp = () => {
     fetchOtp().then(response => {
-      showMessage({type: 'success', message: response.data.message});
+      showMessage({ type: 'success', message: response.data.message });
     });
   };
 
@@ -56,8 +56,9 @@ const VerifyEmailScreen = ({navigation, route}) => {
       isTextureVisible
       isPaddingVertical={!isEmailVerified}
       conStyle={
-        isEmailVerified && {justifyContent: 'center', alignItem: 'center'}
-      }>
+        isEmailVerified && { justifyContent: 'center', alignItem: 'center' }
+      }
+    >
       {!isEmailVerified && (
         <Header isBackVisible={!isEmailVerified} centerType="goback" />
       )}
@@ -76,9 +77,10 @@ const VerifyEmailScreen = ({navigation, route}) => {
               otp: '',
             }}
             validationSchema={validatoinSchema.AuthValidations.verifyOtpSchema}
-            onSubmit={handleVerifyEmail}>
+            onSubmit={handleVerifyEmail}
+          >
             {props => {
-              const {handleSubmit, handleChange, values, errors, handleBlur} =
+              const { handleSubmit, handleChange, values, errors, handleBlur } =
                 props;
 
               return (
@@ -100,22 +102,24 @@ const VerifyEmailScreen = ({navigation, route}) => {
                     activeOpacity={BASEOPACITY}
                     style={styles.resenStyles}
                     disabled={isFetching}
-                    onPress={handleResendOtp}>
+                    onPress={handleResendOtp}
+                  >
                     <Typography fontSize={14} fFamily="poppinsMedium500">
                       Didn’t receive the code?{' '}
                       <Typography
                         fontSize={15}
                         mL={6}
                         fFamily="poppinsMedium500"
-                        color={COLORS.primary}>
+                        color={COLORS.primary}
+                      >
                         Resend Now{' '}
                       </Typography>
                     </Typography>
                   </TouchableOpacity>
                   <Button
-                    type="secondary"
                     label={'Verify Now'}
                     mt={35}
+                    type="primary"
                     onPress={handleSubmit}
                     loader={isPending}
                   />
@@ -131,16 +135,17 @@ const VerifyEmailScreen = ({navigation, route}) => {
           <SuccessMessage
             title="Email Verified Successfully"
             message="Your email has been successfully verified. You can now log in to your account."
-            buttonLabel={comeFromLogin ? "Goto Home" :"Login Now"}
-            onPress={() =>
-              navigation.replace(comeFromLogin ? 'DrawerTabs' : 'LoginScreen')
-            }
+            buttonLabel={comeFromLogin ? 'Go to Home' : 'Login Now'}
+            onPress={() => {
+              comeFromLogin
+                ? navigation.replace('DrawerTabs')
+                : navigation.goBack();
+            }}
           />
         </SlideInView>
       )}
     </Container>
   );
-  f;
 };
 
 export default VerifyEmailScreen;

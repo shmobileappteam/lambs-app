@@ -1,56 +1,63 @@
 import React from 'react';
-import {FlatList, Image, StyleSheet, View} from 'react-native';
-import {Typography, Flex, Container} from '../../../atomComponents';
-import {ActivityIndicator} from 'react-native-paper';
+import { FlatList, Image, StyleSheet, View } from 'react-native';
+import { Typography, Flex, Container } from '../../../atomComponents';
 //----
 import Sizer from '../../../helpers/Sizer';
-import {COLORS, FONTS, GLOBALSTYLE, WINDOW} from '../../../globalStyle/Theme';
-import {nonotif, notif} from '../../../assets/images';
-import {Header} from '../../../components';
+import { COLORS, FONTS, GLOBALSTYLE, WINDOW } from '../../../globalStyle/Theme';
+import { nonotif, notif } from '../../../assets/images';
+import { Header } from '../../../components';
 import SlideInView from '../../../animations/SlideView';
-import {useCustomQuery} from '../../../query/useCustomQuery';
-import {getNotification} from '../../../api/generalService';
+import { useCustomQuery } from '../../../query/useCustomQuery';
+import { getNotification } from '../../../api/generalService';
 import ListEmpty from '../../../atomComponents/ListEmpty';
 
 const NotificationScreen = () => {
-  const {data: notifications, isLoading} = useCustomQuery({
+  const { data: notifications, isLoading } = useCustomQuery({
     queryKey: ['notifications'],
     queryFn: getNotification,
   });
 
-  // console.log('🚀 ~ NotificationScreen ~ data:', notifications);
-
-  const renderItem = ({item, index}) => (
-    <SlideInView slide="right">
-      <View style={[styles.cardContainer, styles.cardWithBg]}>
-        <Flex gap={10}>
-          <View style={styles.iconCircle}>
-            <Image source={notif} style={styles.icon} resizeMode="contain" />
-          </View>
-          <Flex direction="column" flex={1}>
-            <Typography
-              size={15}
-              color={COLORS.black100}
-              fFamily="poppinsMedium500"
-              LineHeight={18}>
-              {item.title}
-            </Typography>
-            <Typography
-              size={14}
-              mT={2}
-              color={COLORS.black100}
-              numberOfLines={3}
-              LineHeight={18}>
-              {item.description}
-            </Typography>
-            <Typography size={12} mT={3}>
-              {new Date(item.created_at).toISOString().split('T')[0]}
-            </Typography>
+  const renderItem = ({ item, index }) => {
+    const notiImage =
+      item?.image?.indexOf('no-image') === -1 ? { uri: item?.image } : notif;
+    return (
+      <SlideInView slide="right">
+        <View style={[styles.cardContainer, styles.cardWithBg]}>
+          <Flex gap={10}>
+            <View style={styles.iconCircle}>
+              <Image
+                source={notiImage}
+                style={styles.icon}
+                resizeMode="contain"
+              />
+            </View>
+            <Flex direction="column" flex={1}>
+              <Typography
+                size={15}
+                color={COLORS.black100}
+                fFamily="poppinsMedium500"
+                LineHeight={18}
+              >
+                {item?.title}
+              </Typography>
+              <Typography
+                size={14}
+                mT={2}
+                color={COLORS.black100}
+                numberOfLines={3}
+                LineHeight={18}
+              >
+                {item?.description}
+              </Typography>
+              <Typography size={12} mT={3}>
+                {new Date(item?.created_at).toISOString().split('T')[0]}
+              </Typography>
+            </Flex>
           </Flex>
-        </Flex>
-      </View>
-    </SlideInView>
-  );
+        </View>
+      </SlideInView>
+    );
+  };
 
   return (
     <Container isPadding={false} isPaddingVertical={false} isTextureVisible>
@@ -58,7 +65,7 @@ const NotificationScreen = () => {
 
       <FlatList
         data={notifications?.data || []}
-        style={{marginTop: Sizer.vSize(18), ...GLOBALSTYLE.paddingHor}}
+        style={{ marginTop: Sizer.vSize(18), ...GLOBALSTYLE.paddingHor }}
         renderItem={renderItem}
         keyExtractor={item => item.id}
         contentContainerStyle={styles.container}
@@ -92,9 +99,12 @@ const styles = StyleSheet.create({
     borderRadius: Sizer.hSize(200),
     justifyContent: 'center',
     alignItems: 'center',
+    backgroundColor: 'lightyellow',
+    overflow: 'hidden',
   },
   icon: {
-    flex: 1,
+    height: '100%',
+    width: '100%',
   },
   emptyMsgView: {
     alignItems: 'center',

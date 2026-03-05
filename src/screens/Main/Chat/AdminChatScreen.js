@@ -1,4 +1,4 @@
-import React, {useEffect, useRef, useState} from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import {
   View,
   StyleSheet,
@@ -6,47 +6,46 @@ import {
   Platform,
   FlatList,
 } from 'react-native';
-import {ActivityIndicator} from 'react-native-paper';
-import {Pusher} from '@pusher/pusher-websocket-react-native';
+import { ActivityIndicator } from 'react-native-paper';
+import { Pusher } from '@pusher/pusher-websocket-react-native';
 //----
-import {WINDOW, COLORS} from '../../../globalStyle/Theme';
-import {Header} from '../../../components';
+import { WINDOW, COLORS } from '../../../globalStyle/Theme';
+import { Header } from '../../../components';
 import Container from '../../../atomComponents/Container';
-import {useKeyboard} from '../../../hooks/useKeyboard';
+import { useKeyboard } from '../../../hooks/useKeyboard';
 import Typography from '../../../atomComponents/Typography';
 import MessageBubble from '../../../components/chat/MessageBubble';
 import ChatInput from '../../../components/chat/ChatInput';
-import {PUSHER} from '../../../constants';
-import {onAuthorizer} from '../../../api/pusherService';
-import {fetchAllMessages, sendMessage} from '../../../api/chatService';
-import {useCustomMutation} from '../../../query/useCustomMutation';
+import { PUSHER } from '../../../constants';
+import { onAuthorizer } from '../../../api/pusherService';
+import { fetchAllMessages, sendMessage } from '../../../api/chatService';
+import { useCustomMutation } from '../../../query/useCustomMutation';
 import Sizer from '../../../helpers/Sizer';
-import {useSelector} from 'react-redux';
+import { useSelector } from 'react-redux';
 import NoMessageSvg from '../../../assets/svgs/NoMessageSvg';
 
-const adminWithCustomer = {to_id: 0, is_customer: 1};
+const adminWithCustomer = { to_id: 0, is_customer: 1 };
 
 const AdminChatScreen = ({}) => {
-  const {keyboardOpen} = useKeyboard();
+  const { keyboardOpen } = useKeyboard();
   const flatListRef = useRef(null);
   const subscriptionRef = useRef(null);
-  const {user} = useSelector(state => state.app);
+  const { user } = useSelector(state => state.app);
 
   const [messages, setMessages] = useState([]);
 
-  const {mutateAsync: fetchMsgs, isPending} = useCustomMutation({
+  const { mutateAsync: fetchMsgs, isPending } = useCustomMutation({
     mutationFn: fetchAllMessages,
   });
 
   //Custom Mutation Hook for Sending Messages:
-  const {mutate: sendMsg, isPending: isSendMessagesPending} = useCustomMutation(
-    {
+  const { mutate: sendMsg, isPending: isSendMessagesPending } =
+    useCustomMutation({
       mutationFn: sendMessage,
       onSuccess: () => {
         setInputMessage('');
       },
-    },
-  );
+    });
 
   const [inputMessage, setInputMessage] = useState('');
 
@@ -80,7 +79,7 @@ const AdminChatScreen = ({}) => {
 
           const incomingMsg = {
             ...message,
-            ...(adminDetails ? {user: adminDetails} : {}),
+            ...(adminDetails ? { user: adminDetails } : {}),
           };
 
           if (
@@ -128,7 +127,7 @@ const AdminChatScreen = ({}) => {
     return () => {
       if (subscriptionRef.current) {
         const pusher = Pusher.getInstance();
-        pusher.unsubscribe({channelName: PUSHER.CHANNEL_NAME});
+        pusher.unsubscribe({ channelName: PUSHER.CHANNEL_NAME });
         console.log('✅ ~ MyComponent ~ unsubscribed from channel');
         subscriptionRef.current = null;
       }
@@ -137,35 +136,38 @@ const AdminChatScreen = ({}) => {
 
   return (
     <KeyboardAvoidingView
-      style={{flex: 1}}
-      keyboardVerticalOffset={keyboardOpen ? -100 : null}
-      behavior={Platform.OS == 'ios' ? 'padding' : 'padding'}>
+      style={{ flex: 1 }}
+      // keyboardVerticalOffset={keyboardOpen ? -100 : null}
+      behavior={Platform.OS == 'ios' ? 'padding' : 'height'}
+    >
       <Container
         isPaddingVertical={false}
         isPadding={false}
         scrollable={false}
         conStyle={{
           paddingBottom: Platform.OS == 'ios' && !keyboardOpen ? 30 : 10,
-        }}>
+        }}
+      >
         <Header title="Admin" type="app" />
 
         <FlatList
           ref={flatListRef}
           scrollEnabled={!!messages?.length}
           data={messages}
-          renderItem={({item}) => <MessageBubble item={item} />}
+          renderItem={({ item }) => <MessageBubble item={item} />}
           ListEmptyComponent={({}) => (
             <View
               style={{
                 height: WINDOW.height / 1.5,
                 justifyContent: 'center',
                 alignItems: 'center',
-              }}>
+              }}
+            >
               {isPending ? (
                 <ActivityIndicator
                   size="small"
                   color={COLORS?.primary}
-                  style={{marginTop: 10}}
+                  style={{ marginTop: 10 }}
                 />
               ) : (
                 <NoMessageSvg />
@@ -175,7 +177,7 @@ const AdminChatScreen = ({}) => {
           keyExtractor={item => item?.id?.toString()}
           inverted={messages?.length ? true : false}
           showsVerticalScrollIndicator={false}
-          style={{marginTop: 15, paddingHorizontal: Sizer.hSize(8)}}
+          style={{ marginTop: 15, paddingHorizontal: Sizer.hSize(8) }}
         />
         {/* Input and Send Button */}
         <ChatInput

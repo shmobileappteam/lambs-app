@@ -49,9 +49,8 @@ export const onLoginSuccess = async (
     } else {
       navigation.dispatch(
         CommonActions.reset({
-          index: 1,
+          index: 0,
           routes: [
-            { name: 'LoginScreen' },
             {
               name: 'VerifyEmailScreen',
               params: {
@@ -110,7 +109,7 @@ export const onRegisterSuccess = async (response, navigation) => {
       type: 'success',
       message: response?.message,
     });
-    navigation.navigate('VerifyEmailScreen');
+    navigation.replace('VerifyEmailScreen');
   }
 };
 

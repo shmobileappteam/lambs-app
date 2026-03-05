@@ -44,6 +44,7 @@ const EditProfileScreen = ({ navigation }) => {
           type: 'success',
           message: response?.message,
         });
+        navigation.goBack();
       }
     },
     onSettled: () => {
@@ -73,7 +74,6 @@ const EditProfileScreen = ({ navigation }) => {
     image: user?.image || null,
     address: user?.address || null,
   };
-  // console.log('🚀 ~ EditProfileScreen ~ user:', user);
 
   useEffect(() => {
     const backHandler = BackHandler.addEventListener(
@@ -96,24 +96,17 @@ const EditProfileScreen = ({ navigation }) => {
     <Container isPadding={false} isPaddingVertical={false} isTextureVisible>
       <Header
         type="app"
-        title={edit ? 'Edit Profile' : 'Profile'}
-        onPresBack={
-          edit
-            ? () => {
-                setIsEdit(false);
-                clearImages();
-              }
-            : null
-        }
+        title={'Edit Profile'}
+        onPresBack={() => navigation.goBack()}
       />
       <KeyboardAvoidingView
         behavior={Platform.OS == 'ios' ? 'padding' : 'height'}
-        keyboardVerticalOffset={-100}
+        // keyboardVerticalOffset={-100}
       >
         <ScrollView
           showsVerticalScrollIndicator={false}
           style={GLOBALSTYLE.paddingHor}
-          contentContainerStyle={{ paddingBottom: Sizer.hSize(250) }}
+          contentContainerStyle={{ paddingBottom: Sizer.hSize(50) }}
         >
           <FormController
             initialValues={initialValues}
@@ -134,11 +127,7 @@ const EditProfileScreen = ({ navigation }) => {
                     <TouchableOpacity
                       activeOpacity={BASEOPACITY}
                       onPress={() => {
-                        if (edit) {
-                          openGallery();
-                        } else {
-                          setIsEdit(!edit);
-                        }
+                        openGallery();
                       }}
                       style={{ position: 'relative' }}
                     >
@@ -148,19 +137,17 @@ const EditProfileScreen = ({ navigation }) => {
                         style={{ backgroundColor: 'grey' }}
                       />
 
-                      {!edit && (
-                        <Image
-                          source={Edit}
-                          resizeMode="contain"
-                          style={{
-                            height: Sizer.vSize(24),
-                            width: Sizer.vSize(24),
-                            position: 'absolute',
-                            bottom: 0,
-                            right: 0,
-                          }}
-                        />
-                      )}
+                      <Image
+                        source={Edit}
+                        resizeMode="contain"
+                        style={{
+                          height: Sizer.vSize(24),
+                          width: Sizer.vSize(24),
+                          position: 'absolute',
+                          bottom: 0,
+                          right: 0,
+                        }}
+                      />
                     </TouchableOpacity>
                   </Flex>
 
@@ -184,7 +171,7 @@ const EditProfileScreen = ({ navigation }) => {
                     handleBlur={handleBlur('name')}
                     leftIcon
                     leftIconName="user"
-                    disable={edit}
+                    disable={true}
                   />
                   <InputLabel title="Address" />
                   <TextField
@@ -195,34 +182,36 @@ const EditProfileScreen = ({ navigation }) => {
                     handleBlur={handleBlur('address')}
                     leftIcon
                     leftIconName="info"
-                    disable={edit}
+                    disable={true}
                   />
 
                   <InputLabel title="Phone Number" />
                   <TextField
-                    placeholder="+1234567890"
+                    placeholder="123-456-7890"
                     leftIcon
                     leftIconName="phone"
-                    handleChange={number =>
-                      handleChange('phone')(number?.replace(/\D/g, ''))
-                    }
+                    handleChange={number => {
+                      let digits = number?.replace(/\D/g, '');
+                      if (digits?.startsWith('1')) {
+                        digits = digits.slice(1);
+                      }
+                      handleChange('phone')(digits);
+                    }}
                     value={maskPhoneNumber(values?.phone)}
                     error={errors.phone}
                     onBlur={handleBlur('phone')}
-                    maxLength={12}
-                    keyboardType="number-pad"
-                    disable={edit}
+                    maxLength={17}
+                    keyboardType="phone-pad"
+                    disable={true}
                   />
 
-                  {edit && (
-                    <Button
-                      label="Save Changes"
-                      type="secondary"
-                      mt={48}
-                      onPress={handleSubmit}
-                      loader={isPending}
-                    />
-                  )}
+                  <Button
+                    label="Save Changes"
+                    type="secondary"
+                    mt={48}
+                    onPress={handleSubmit}
+                    loader={isPending}
+                  />
                 </>
               );
             }}

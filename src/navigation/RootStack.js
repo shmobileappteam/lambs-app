@@ -34,7 +34,6 @@ const RootStack = () => {
     'VerifyEmailScreen',
     'ForgotPasswordScreen',
     'ResetPasswordScreen',
-    'GetStartedScreen',
     'SplashScreen',
   ];
 

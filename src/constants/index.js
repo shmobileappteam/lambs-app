@@ -17,9 +17,9 @@ export const STATUS = {
 };
 
 export const PUSHER = {
-  API_KEY: '87a11bbe84e1aad20446',
+  API_KEY: '221f7e6e28b78caa65fa',
   CLUSTER: 'ap2',
-  CHANNEL_NAME: 'private-westCoastRoofersGutters',
+  CHANNEL_NAME: 'private-lambs',
 };
 
 export const STRIPE_PUBLISHABLE_KEY =
