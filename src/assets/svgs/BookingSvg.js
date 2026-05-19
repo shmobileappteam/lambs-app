@@ -1,13 +1,18 @@
 import * as React from 'react';
 import Svg, {Path} from 'react-native-svg';
 
+import Sizer from '../../helpers/Sizer';
+
 function BookingSvg(props) {
+  const w = props.width || Sizer.hSize(28);
+  const h = props.height || Sizer.hSize(29);
+
   return (
     <>
       {props.active ? (
         <Svg
-          width={28}
-          height={29}
+          width={w}
+          height={h}
           viewBox="0 0 28 29"
           fill="none"
           xmlns="http://www.w3.org/2000/svg"
@@ -21,8 +26,8 @@ function BookingSvg(props) {
         </Svg>
       ) : (
         <Svg
-          width={28}
-          height={29}
+          width={w}
+          height={h}
           viewBox="0 0 28 29"
           fill="none"
           xmlns="http://www.w3.org/2000/svg"

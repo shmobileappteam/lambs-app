@@ -341,7 +341,7 @@
 					"-ObjC",
 					"-lc++",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.sh.lambs;
+				PRODUCT_BUNDLE_IDENTIFIER = org.reactjs.native.example.Lambs.sh;
 				PRODUCT_NAME = Lambs;
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
 				SUPPORTS_MACCATALYST = NO;
@@ -375,7 +375,7 @@
 					"-ObjC",
 					"-lc++",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.sh.lambs;
+				PRODUCT_BUNDLE_IDENTIFIER = org.reactjs.native.example.Lambs.sh;
 				PRODUCT_NAME = Lambs;
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
 				SUPPORTS_MACCATALYST = NO;

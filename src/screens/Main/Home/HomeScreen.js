@@ -127,6 +127,7 @@ const HomeScreen = ({ navigation }) => {
           />
         )}
       </View>
+
     </Container>
   );
 };
@@ -210,10 +211,7 @@ const styles = StyleSheet.create({
   backgroundImage: {
     ...GLOBALSTYLE.paddingHor,
     paddingTop: Sizer.vSize(20),
-    // paddingBottom: Platform.select({
-    //   ios: Sizer.vSize(100),
-    //   android: Sizer.vSize(140),
-    // }),
+    paddingBottom: Sizer.vSize(8),
     flex: 1,
   },
 

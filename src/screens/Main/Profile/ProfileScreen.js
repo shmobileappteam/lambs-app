@@ -87,7 +87,7 @@ const ProfileScreen = ({ navigation }) => {
       <ScrollView
         showsVerticalScrollIndicator={false}
         style={GLOBALSTYLE.paddingHor}
-        contentContainerStyle={{ paddingBottom: Sizer.hSize(100) }}
+        contentContainerStyle={{ paddingBottom: Sizer.hSize(88) }}
       >
         <Flex algItems={'center'} direction={'column'} mT={40} mb={30}>
           <Avatar.Image
